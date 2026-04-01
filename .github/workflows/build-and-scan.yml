@@ -1,0 +1,20 @@
+name: "Build and Scan Hello World docker image"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-scan:
+    permissions:
+      contents: read
+    uses: Home-Office-Digital/core-cloud-workflow-docker-actions/.github/workflows/build-scan.yml@CCL-8481
+    with:
+      working_directory: "."
+      dockerfile: "Dockerfile"
+      image_name: "hello-world"
+      image_tag: "0.0.1"
