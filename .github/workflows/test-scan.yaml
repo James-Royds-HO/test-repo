@@ -1,32 +1,19 @@
-name: Security Scan
+name: Checkov Scan
 
 on:
   push:
-    branches: [ feature/README-changes ]
+    branches:
+      - feature/README-changes
   pull_request:
-    branches: [ feature/README-changes ]
+    branches:
+      - feature/README-changes
+
+permissions:
+  actions: read
+  contents: read
+  id-token: write
+  security-events: write
 
 jobs:
   checkov-scan:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Run Checkov Scan
-        id: checkov
-        uses: bridgecrewio/checkov-action@master
-        with:
-          directory: .
-          output_format: sarif
-          output_file_path: results.sarif
-        continue-on-error: true
-
-      - name: Debug
-        shell: bash
-        run: |
-          cat results.sarif/results_sarif.sarif | jq -C '.' | less -R
+    uses: UKHomeOffice/core-cloud-workflow-checkov-sast-scan/.github/workflows/checkov-scan-base.yaml@1.7.1
