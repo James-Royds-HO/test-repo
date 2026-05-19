@@ -29,4 +29,4 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          cat results.sarif/results_sarif.sarif
+          cat results.sarif/results_sarif.sarif | jq -C '.' | less -R
